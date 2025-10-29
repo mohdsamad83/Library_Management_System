@@ -1,0 +1,15 @@
+#top,second_top{
+    margin: 0px;
+}
+#second_top{
+    width: 50%;
+    margin: auto;
+    height: 800px;
+    border: black;
+}
+#form_div{
+    width: 400px;
+    border: 1px solid red;
+    margin: auto;
+    
+}
