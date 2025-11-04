@@ -1,0 +1,31 @@
+##To create database, open terminal go to current working directory, then enter 
+1. python
+2. >>> from app import *
+3. >>> db.create_all()
+
+##to add admin to Users
+
+1. user1 = User(email = "admin@user.com",username = "admin", password = "\admin123", type = "admin")
+2. db.session.add(user1)
+3. db.session.commit()
+
+##To update the database
+1. user3 = User.query.filter_by(username="Rahul").first()
+2. user3.username = "Pranith"
+4. user3.email = "pranith@user.com"
+5. db.session.commit()
+
+
+## To delete a row of data in the database
+1. u1 = User.query.get(3) # 3 hereis ID
+2. db.session.delete(u1)
+3. db.session.commit()
+
+## To read data 
+
+1. users = user.query.all()
+2. users
+    you get data displayed hereis
+3. u1 = users[0]
+4. u1.username
+ here you get displayed with username 

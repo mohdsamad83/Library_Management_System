@@ -18,19 +18,19 @@
 
 
             <div class="form_card">
-                <form action="" method="post">
+                <form action="/login" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="samad123">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="samad123">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="************">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="************">
                     </div>
                     <div class="submit_botton">
                         <button type="submit" class="btn btn-primary">Sign in</button>
                         <br>
-                        To sign up <a href="register.html">click here</a>
+                        To sign up <a href="/register">click here</a>
                     </div>
                 </form>
             </div>

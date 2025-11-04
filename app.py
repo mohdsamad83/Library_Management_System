@@ -1,13 +1,24 @@
 from flask import Flask
-from flask import request
-from flask import render_template
+from application.database import db
+app = None
 
-app = Flask(__name__)
-
-@app.route("/")
-def hello():
-    return render_template("login.html")
-
-if __name__ == "__main__":
+def create_app():
+    app = Flask(__name__)
     app.debug = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ebook.sqlite3"
+    db.init_app(app)
+    app.app_context().push()
+    return app
+
+app = create_app()
+from application.controllers import *
+
+
+
+
+if __name__ == '__main__':
+    # db.create_all()
+    # user1 = User(email = "admin@user.com",username = "admin", password = "admin123", type = "admin")
+    # db.session.add(user1)
+    # db.session.commit()
     app.run()
