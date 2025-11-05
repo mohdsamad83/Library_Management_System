@@ -14,7 +14,7 @@
     <div class="sign_in">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Welcome {{this_user.username}}</a>
+                <a class="navbar-brand" href="#">Welcome {{user.username}}</a>
 
                 <div class="d-flex">
                     <a class="btn btn-outline-secondary" href="/login">logout</a>
@@ -37,25 +37,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for granted_book in g_books %}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Atomic Habits</td>
-                        <td>James Clear</td>
+                        <th scope="row">{{granted_book.id}}</th>
+                        <td>{{granted_book.b_name}}</td>
+                        <td>{{granted_book.author}}</td>
                         <td>
-                            <a href="" class="btn btn-outline-success">View </a>
-                            <a href="" class="btn btn-outline-danger">Return </a>
+                            <a href="{{ granted_book.b_url}}" target="_blank" class="btn btn-outline-success">View </a>
+                            <a href="{{ url_for('return_granted', user_id=user.id, book_id=granted_book.id) }}" class="btn btn-outline-danger">Return </a>
 
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Zero to One</td>
-                        <td>Peter Thiel & Blake Masters</td>
-                        <td>
-                            <a href="" class="btn btn-outline-success">View </a>
-                            <a href="" class="btn btn-outline-danger">Return </a>
-                        </td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -75,15 +68,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for book in e_books %}
                     <tr>
-                        <th scope="row">3</th>
-                        <td>Rich Dad Poor Dad</td>
-                        <td>Robert Kiyosaki and Sharon Lechter</td>
+                        <th scope="row">{{book.id}}</th>
+                        <td>{{book.b_name}}</td>
+                        <td>{{book.author}}</td>
                         <td>
-                            <a href="" class="btn btn-outline-success">Request </a>
-                            <!-- This should change to Cancel request on cliking-->
+                            <a href="{{ url_for('request_book', user_id=user.id, book_id=book.id) }}" class="btn btn-outline-success">Request </a>
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

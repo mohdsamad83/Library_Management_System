@@ -23,7 +23,7 @@
 
 ## To read data 
 
-1. users = user.query.all()
+1. users = User.query.all()
 2. users
     you get data displayed hereis
 3. u1 = users[0]

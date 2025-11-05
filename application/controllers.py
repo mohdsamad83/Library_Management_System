@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 from flask import current_app as app
 from .models import *
 
@@ -12,10 +12,12 @@ def login():
         if this_user:
             if this_user.type == "admin":
                 # print("Admin logged in")
-                return render_template("admin_dashboard.html", this_user=this_user)
+                # return render_template("admin_dashboard.html", user=this_user)
+                return redirect(url_for("admin_dashboard", user = this_user, user_id = this_user.id))
             else:
-                return render_template("user_dashboard.html", this_user=this_user)
+                return redirect(url_for("user_dashboard", user_id = this_user.id))
                 # print("General user logged in")
+                # print(this_user.id)
         else:
             return "Invalid credentials"
     return render_template("login.html")
@@ -38,21 +40,28 @@ def register():
             db.session.add(user)
             db.session.commit()
         return render_template("login.html")
-    
 
-
-@app.route("/admin_dashboard",methods = ["GET","POST"])
-def admin_dashboard():
-    if request.method == "GET":
-        return render_template("admin_dashboard.html")
-    if request.method == "POST":
-        return render_template("admin_dashboard.html")
+@app.route("/admin_dashboard/<int:user_id>", methods=["GET"])
+def admin_dashboard(user_id):
+    this_user = User.query.filter_by(id=int(user_id)).first()
+    e_books = Ebook.query.filter_by(status="Requested").all()
+    e_users = User.query.all()
+    # g_books = Ebook.query.filter_by(status="Granted",user_id = int(user_id)).all()
     
-        
-@app.route("/create_eb.html", methods=["GET","POST"])
+    return render_template("admin_dashboard.html", user=this_user, admin_books=e_books,admin_users = e_users)
+
+@app.route("/grant_permission/<int:user_id>/<int:book_id>/<int:customer_user_id>",methods=["GET"])
+def grant_permission(user_id,book_id,customer_user_id):
+    book = Ebook.query.get(book_id)
+    # user = User.query.get(customer_user_id)
+    book.status = "Granted"
+    book.user_id = customer_user_id
+    db.session.commit()
+    return redirect(url_for("admin_dashboard", user_id=user_id))
+
+@app.route("/create_eb", methods=["GET","POST"])
 def create_eb():
-    if request.method == "GET":
-        return render_template("create_eb.html")
+    this_user = User.query.filter_by(type = "admin").first()
     if request.method == "POST":
         b_name = request.form.get("b_name")
         author = request.form.get("author")
@@ -60,12 +69,36 @@ def create_eb():
         ebook = Ebook(b_name = b_name, author = author,b_url = b_url)
         db.session.add(ebook)
         db.session.commit()
-    return render_template("admin_dashboard.html")
+        return redirect(url_for("admin_dashboard", user = this_user, user_id = this_user.id))
+    return render_template("create_eb.html")
+    
+
+
+@app.route("/user_dashboard/<int:user_id>", methods=["GET"])
+def user_dashboard(user_id):
+    this_user = User.query.filter_by(id=int(user_id)).first()
+    e_books = Ebook.query.filter_by(status="Available").all()
+    g_books = Ebook.query.filter_by(status="Granted",user_id = int(user_id)).all()
+    
+    # e_books = Ebook.query.filter_by(status="Requested").all()
+    return render_template("user_dashboard.html", user=this_user, e_books=e_books, g_books=g_books)
+
+@app.route("/request/<int:user_id>/<int:book_id>",methods=["GET"])
+def request_book(user_id,book_id):
+    book = Ebook.query.get(book_id)
+    book.status = "Requested"
+    book.user_id = user_id
+    db.session.commit()
+    return redirect(url_for("user_dashboard", user_id=user_id))
+
+@app.route("/return_granted/<int:user_id>/<int:book_id>",methods=["GET"])
+def return_granted(user_id,book_id):
+    book = Ebook.query.get(book_id)
+    book.status = "Available"
+    book.user_id = "null"
+    db.session.commit()
+    return redirect(url_for("user_dashboard", user_id=user_id))
 
 
 
 
-@app.route("/user_dashboard",methods = ["GET","POST"])
-def user_dashboard():
-
-    return render_template("user_dashboard.html")

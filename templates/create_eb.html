@@ -11,16 +11,16 @@
 </head>
 
 <body>
-    <div >
+    <div>
         <div class="sign_card">
             <h1>Create EBook</h1>
 
 
             <div class="form_card">
-                <form action="/create_eb" method="post">
+                <form action="/create_eb" method="POST">
                     <div class="mb-3">
-                        <label for="bname" class="form-label">Enter Book Name</label>
-                        <input type="text" class="form-control" id="bname" name="bname" placeholder="Eg: Atomic Habits">
+                        <label for="b_name" class="form-label">Enter Book Name</label>
+                        <input type="text" class="form-control" id="b_name" name="b_name" placeholder="Eg: Atomic Habits">
                     </div>
                     <div class="mb-3">
                         <label for="author" class="form-label">Author Name</label>
@@ -28,10 +28,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="b_url" class="form-label">URL</label>
-                        <input type="text" class="form-control" id="b_url"name="b_url" placeholder="Eg: https://...">
+                        <input type="text" class="form-control" id="b_url" name="b_url" placeholder="Eg: https://...">
                     </div>
                     <div class="submit_botton">
                         <button type="submit" class="btn btn-primary"> Add </button>
+
                     </div>
                 </form>
             </div>
