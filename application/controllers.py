@@ -45,19 +45,21 @@ def register():
 def admin_dashboard(user_id):
     this_user = User.query.filter_by(id=int(user_id)).first()
     e_books = Ebook.query.filter_by(status="Requested").all()
+    A_books = Ebook.query.filter_by(status="Available").all()
+    G_books = Ebook.query.filter_by(status="Granted").all()
     e_users = User.query.all()
-    # g_books = Ebook.query.filter_by(status="Granted",user_id = int(user_id)).all()
-    
-    return render_template("admin_dashboard.html", user=this_user, admin_books=e_books,admin_users = e_users)
+    Etotal_users = Ebook.query.all()
+    return render_template("admin_dashboard.html", user=this_user, admin_total_ebooks=Etotal_users, admin_books=e_books,admin_users = e_users, admin_a_book=A_books,admin_g_book = G_books)
 
 @app.route("/grant_permission/<int:user_id>/<int:book_id>/<int:customer_user_id>",methods=["GET"])
 def grant_permission(user_id,book_id,customer_user_id):
     book = Ebook.query.get(book_id)
-    # user = User.query.get(customer_user_id)
     book.status = "Granted"
     book.user_id = customer_user_id
     db.session.commit()
     return redirect(url_for("admin_dashboard", user_id=user_id))
+
+
 
 @app.route("/create_eb", methods=["GET","POST"])
 def create_eb():

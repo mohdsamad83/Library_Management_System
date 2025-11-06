@@ -21,8 +21,35 @@
             </div>
         </nav>
     </div>
+    
+    <div class="summary_head ">
+        <h1> Summary </h1>
+        <div class="summary ">
+            <div class="individual_summary ">
+                <h1>Total Users</h1>
+                <h3>{{admin_users | length}}</h3>
+            </div>
+            <div class="individual_summary ">
+                <h1>Total Books</h1>
+                <h3>{{admin_total_ebooks | length}}</h3>
+            </div>
+            <div class="individual_summary">
+                <h1>Requested books</h1>
+                <h3>{{admin_books | length}}</h3>
+            </div>
+            <div class="individual_summary">
+                <h1>Available Books</h1>
+                <h3>{{admin_a_book | length}}</h3>
+            </div>
+            <div class="individual_summary">
+                <h1>Granted Books</h1>
+                <h3>{{admin_g_book | length}}</h3>
+            </div>
+        </div>
+    </div>
+
     <div id="book_button">
-        <a href="/create_eb" class="btn btn-outline-primary">Add a new book</a>
+        <a href="/create_eb" class="btn btn-success">Add a new book</a>
     </div>
     <div class=" req_books_admin content_main">
         <h1> Requested books by user </h1>
@@ -66,28 +93,8 @@
         </div>
     </div>
 
-    <div class="summary_head ">
-        <h1> Summary </h1>
-        <div class="summary ">
-            <div class="individual_summary ">
-                <h1>Total Users</h1>
-                <h3>#101</h3>
-            </div>
-            <div class="individual_summary">
-                <h1>Requested books</h1>
-                <h3>#55</h3>
-            </div>
-            <div class="individual_summary">
-                <h1>Available</h1>
-                <h3>#5</h3>
-            </div>
-            <div class="individual_summary">
-                <h1>Granted</h1>
-                <h3>#30</h3>
-            </div>
-        </div>
-    </div>
-    </div>
+
+
 </body>
 
 </html>
