@@ -47,7 +47,7 @@ def admin_dashboard(user_id):
     e_books = Ebook.query.filter_by(status="Requested").all()
     A_books = Ebook.query.filter_by(status="Available").all()
     G_books = Ebook.query.filter_by(status="Granted").all()
-    e_users = User.query.all()
+    e_users = User.query.filter_by(type="general").all()
     Etotal_users = Ebook.query.all()
     return render_template("admin_dashboard.html", user=this_user, admin_total_ebooks=Etotal_users, admin_books=e_books,admin_users = e_users, admin_a_book=A_books,admin_g_book = G_books)
 
