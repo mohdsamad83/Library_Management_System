@@ -3,6 +3,10 @@ from flask import current_app as app
 from .models import *
 
 
+@app.route("/")
+def index():
+    return redirect(url_for("login"))
+
 @app.route("/login",methods = ["GET","POST"])
 def login():
     if request.method == "POST":
